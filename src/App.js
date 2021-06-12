@@ -12,19 +12,15 @@ const LocationInput = () => {
   const getWeather = async () => {
     const url = `api.openweathermap.org/data/2.5/weather?q=${location}&appid=${credentials.api_Key}`;
 
-
     try {
-      console.log('URRRLLLLL', url);
-      await fetch(url).then(async response => {
-        try {
-          const data = response;
-          console.log('response data?', data)
-        } catch (error) {
-          console.log('Error happened here!')
-          console.error(error)
-        }
-      });
-
+      const response = await fetch(url);
+      const weather_data = response.data;
+      console.log('response data?', weather_data)
+        
+      // } catch (error) {
+      //   console.log('Error happened here!')
+      //   console.error(error)
+      // }
     } catch (error) {
       console.log("Error in get call!!");
 
