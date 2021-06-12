@@ -2,9 +2,8 @@
 import "./App.css";
 import React from "react";
 import credentials from "./Credentials";
-// import axios from 'axios';
 
-const LocationInput = () => {
+const LocationInput = (props) => {
 	const [location, setLocation] = React.useState();
 
 	const getWeather = async () => {
@@ -13,11 +12,20 @@ const LocationInput = () => {
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
-			console.log(data);
+      console.log(data);
+      props.onSubmit(data);
+
+      return data
+
+      // return data;
 		} catch (error) {
 			console.log("Error in get call!!");
 		}
+
 	};
+
+
+
 
 	return (
 		<div>
@@ -32,10 +40,30 @@ const LocationInput = () => {
 	);
 };
 
+const WeatherCards = (props) => (
+  
+    <div>
+      {props.weatherInfos.map(weatherInfo => <WeatherCard key = {weatherInfo.id} {...weatherInfo} />)}
+    </div>
+)
+
+const WeatherCard = (props) => (
+    <div>
+      props.coords
+    </div>
+)
+
+
 function App() {
+  const [weatherData, setWeatherData] = React.useState([]);
+  const addNewWeatherData = (newWeatherData) => {
+    setWeatherData(...weatherData, newWeatherData)
+  };
+
 	return (
 		<div>
-			<LocationInput />
+			<LocationInput onSubmit={addNewWeatherData} />
+      <WeatherCards weatherInfos={weatherData} />
 			I'm still working
 		</div>
 	);
