@@ -13,19 +13,22 @@ const LocationInput = () => {
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
-			if (updateWeatherData.length > 0) {
+			let exists = false;
+			// console.log(data);
+			if (updateWeatherData) {
 				updateWeatherData.forEach(each => {
 					if (each.name === data.name) {
-						console.log('This location already exists');
-					} else {
-						setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));					
-					}
+						exists = true;
+					} 
 				});
-			} else {
-				setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
 			}
 
-			 
+			if (!exists) {
+				setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
+			} else {
+				console.log('This location already exists');
+			}
+
 		} catch (error) {
 			console.log("Error in getting location data");
 		}	
