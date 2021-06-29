@@ -2,10 +2,25 @@
 import "./App.scss";
 import React from "react";
 import credentials from "./Credentials";
-
+// localStorage.clear()
 const LocationInput = () => {
+
+
+	let getDataFromLS = () => {
+		let values = [];
+    let keys = Object.keys(localStorage);
+    let i = keys.length;
+
+    while ( i-- ) {
+        values.push( JSON.parse(localStorage.getItem(keys[i])));
+    }
+		console.log("All In LS", values);
+    return values;
+	}
+
+
 	const [location, setLocation] = React.useState();
-	const [updateWeatherData, setUpdateWeatherData] = React.useState([]);
+	let [updateWeatherData, setUpdateWeatherData] = React.useState([]);
 
 	let getWeather = async () => {	
 		const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${credentials.api_Key}`;
@@ -13,21 +28,11 @@ const LocationInput = () => {
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
-			let exists = false;
-			// console.log(data);
-			if (updateWeatherData) {
-				updateWeatherData.forEach(each => {
-					if (each.name === data.name) {
-						exists = true;
-					} 
-				});
-			}
 
-			if (!exists) {
-				setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
-			} else {
-				console.log('This location already exists');
-			}
+			localStorage.setItem(data.name, JSON.stringify(data));
+
+			setUpdateWeatherData(getDataFromLS)
+			console.log('Not LS', updateWeatherData);
 
 		} catch (error) {
 			console.log("Error in getting location data");
@@ -74,7 +79,17 @@ const WeatherCards = (props) => {
 
 const WeatherCard = (props) => (
     <div>
-      'Coordinates' = {props.name}
+      Location = {props.name}
+			<br/>
+			Country = {props.sys.country}
+			<br/>
+			Icon = {props.weather[0].icon}
+			<br/>
+			Condition = {props.weather[0].main}
+			<br/>
+			Description = {props.weather[0].description}
+			<br/>
+			<br/>
     </div>
 )
 
@@ -91,3 +106,30 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+	// let exists = false;
+			// if (updateWeatherData.length > 0) {
+			// 	updateWeatherData.forEach(each => {
+			// 		if (each.name === data.name) {
+			// 			exists = true;
+			// 		} 
+			// 	});
+			// }
+
+			// if (!exists) {
+			// 	// setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
+
+			// } else {
+			// 	alert('This location already exists');
+			// }
