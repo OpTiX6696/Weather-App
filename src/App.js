@@ -1,69 +1,87 @@
 // import logo from './logo.svg';
-import "./App.css";
+import "./App.scss";
 import React from "react";
 import credentials from "./Credentials";
 
-const LocationInput = (props) => {
+const LocationInput = () => {
 	const [location, setLocation] = React.useState();
+	const [updateWeatherData, setUpdateWeatherData] = React.useState([]);
 
-	const getWeather = async () => {
+	let getWeather = async () => {	
 		const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${credentials.api_Key}`;
-
+		
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
-      console.log(data);
-      props.onSubmit(data);
+			if (updateWeatherData.length > 0) {
+				updateWeatherData.forEach(each => {
+					if (each.name === data.name) {
+						console.log('This location already exists');
+					} else {
+						setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));					
+					}
+				});
+			} else {
+				setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
+			}
 
-      return data
-
-      // return data;
+			 
 		} catch (error) {
-			console.log("Error in get call!!");
-		}
-
+			console.log("Error in getting location data");
+		}	
 	};
-
-
-
+	
+	
 
 	return (
-		<div>
-			<input
-				type="text"
-				placeholder="Enter Location here..."
-				onChange={(e) => setLocation(e.target.value)}
-			></input>
+		<>
+			<div className="input_container">
+				<input
+					type="text"
+					className="input_text"
+					placeholder="Enter Location here..."
+					onChange={(e) => setLocation(e.target.value)}
+				></input>
+				<button 
+				onClick={getWeather}
+				className="input_button"
+				>
+					Get Weather
+				</button>
+			</div>
 
-			<button onClick={getWeather}>Get Weather</button>
-		</div>
+			<WeatherCards 
+				weatherInfos={updateWeatherData} 
+				/>
+		</>
 	);
 };
 
-const WeatherCards = (props) => (
-  
-    <div>
-      {props.weatherInfos.map(weatherInfo => <WeatherCard key = {weatherInfo.id} {...weatherInfo} />)}
+const WeatherCards = (props) => {
+
+	return (
+		<div className="container_cards">
+      {props.weatherInfos.map(weatherInfo => <WeatherCard 
+			key = {weatherInfo.name} 
+			{...weatherInfo} 
+			className="container_card"/>)}
     </div>
-)
+	);
+}
 
 const WeatherCard = (props) => (
     <div>
-      props.coords
+      'Coordinates' = {props.name}
     </div>
 )
 
 
 function App() {
-  const [weatherData, setWeatherData] = React.useState([]);
-  const addNewWeatherData = (newWeatherData) => {
-    setWeatherData(...weatherData, newWeatherData)
-  };
 
 	return (
-		<div>
-			<LocationInput onSubmit={addNewWeatherData} />
-      <WeatherCards weatherInfos={weatherData} />
+		<div className="container">
+			<LocationInput />
+      
 			I'm still working
 		</div>
 	);
