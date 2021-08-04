@@ -10,11 +10,10 @@ const LocationInput = () => {
 		let values = [];
     let keys = Object.keys(localStorage);
     let i = keys.length;
-
     while ( i-- ) {
         values.push( JSON.parse(localStorage.getItem(keys[i])));
     }
-		console.log("All In LS", values);
+		// console.log("All In LS", values);
     return values;
 	}
 
@@ -28,18 +27,14 @@ const LocationInput = () => {
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
-
 			localStorage.setItem(data.name, JSON.stringify(data));
-
 			setUpdateWeatherData(getDataFromLS)
-			console.log('Not LS', updateWeatherData);
+			// console.log('Not LS', updateWeatherData);
 
 		} catch (error) {
 			console.log("Error in getting location data");
 		}	
 	};
-	
-	
 
 	return (
 		<>
@@ -68,30 +63,45 @@ const LocationInput = () => {
 const WeatherCards = (props) => {
 
 	return (
-		<div className="container_cards">
+		<div className="cards_container">
       {props.weatherInfos.map(weatherInfo => <WeatherCard 
 			key = {weatherInfo.name} 
-			{...weatherInfo} 
-			className="container_card"/>)}
+			{...weatherInfo} />)}
     </div>
 	);
 }
 
-const WeatherCard = (props) => (
-    <div>
-      Location = {props.name}
-			<br/>
-			Country = {props.sys.country}
-			<br/>
-			Icon = {props.weather[0].icon}
-			<br/>
-			Condition = {props.weather[0].main}
-			<br/>
-			Description = {props.weather[0].description}
-			<br/>
-			<br/>
-    </div>
-)
+const WeatherCard = (props) => {
+
+		const handleCardRemoval = (val) => {
+			console.log(val)
+		}
+
+		return (
+
+			<div className="card_container">
+				<button
+				className="remove"
+				onClick={() => handleCardRemoval(props.name)}>Remove Card</button>
+
+				<div>
+					Location = {props.name}
+					<br/>
+					Country = {props.sys.country}
+					<br/>
+					<img alt="Weather Graphic" src={"https://openweathermap.org/img/wn/"+props.weather[0].icon+"@2x.png"}></img>
+					{/* Icon = {props.weather[0].icon} */}
+					<br/>
+					Condition = {props.weather[0].main}
+					<br/>
+					Description = {props.weather[0].description}
+					<br/>
+					<br/>
+				</div>
+
+		</div>
+		)
+}
 
 
 function App() {
