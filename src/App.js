@@ -3,25 +3,26 @@ import "./App.scss";
 import React from "react";
 import credentials from "./Credentials";
 // localStorage.clear()
-const LocationInput = () => {
 
 
-	let getDataFromLS = () => {
-		let values = [];
-    let keys = Object.keys(localStorage);
-    let i = keys.length;
-    while ( i-- ) {
-        values.push( JSON.parse(localStorage.getItem(keys[i])));
-    }
-		// console.log("All In LS", values);
-    return values;
+// To Get Data From LocalStorage
+let getDataFromLS = () => {
+	let values = [];
+	let keys = Object.keys(localStorage);
+	let i = keys.length;
+	while ( i-- ) {
+			values.push( JSON.parse(localStorage.getItem(keys[i])));
 	}
+	// console.log("All In LS", values);
+	return values;
+}
 
+const LocationInput = () => {
 
 	const [location, setLocation] = React.useState();
 	let [updateWeatherData, setUpdateWeatherData] = React.useState([]);
 
-	let getWeather = async () => {	
+	let getWeather = async () => {
 		const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${credentials.api_Key}`;
 		
 		try {
@@ -54,7 +55,8 @@ const LocationInput = () => {
 			</div>
 
 			<WeatherCards 
-				weatherInfos={updateWeatherData} 
+				weatherInfos={updateWeatherData}
+				toRefresh={() => setUpdateWeatherData(getDataFromLS)}
 				/>
 		</>
 	);
@@ -65,7 +67,8 @@ const WeatherCards = (props) => {
 	return (
 		<div className="cards_container">
       {props.weatherInfos.map(weatherInfo => <WeatherCard 
-			key = {weatherInfo.name} 
+			key = {weatherInfo.name}
+			refresh={props.toRefresh}
 			{...weatherInfo} />)}
     </div>
 	);
@@ -74,11 +77,14 @@ const WeatherCards = (props) => {
 const WeatherCard = (props) => {
 
 		const handleCardRemoval = (val) => {
-			console.log(val)
+			console.log(val);
+			localStorage.removeItem(val);
+			props.refresh()
+
+			// console.log(getDataFromLS());
 		}
 
 		return (
-
 			<div className="card_container">
 				<button
 				className="remove"
@@ -110,36 +116,8 @@ function App() {
 		<div className="container">
 			<LocationInput />
       
-			I'm still working
 		</div>
 	);
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-	// let exists = false;
-			// if (updateWeatherData.length > 0) {
-			// 	updateWeatherData.forEach(each => {
-			// 		if (each.name === data.name) {
-			// 			exists = true;
-			// 		} 
-			// 	});
-			// }
-
-			// if (!exists) {
-			// 	// setUpdateWeatherData(updateWeatherData => ([...updateWeatherData, data]));
-
-			// } else {
-			// 	alert('This location already exists');
-			// }
