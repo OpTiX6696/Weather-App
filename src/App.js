@@ -68,7 +68,7 @@ const WeatherCards = (props) => {
 		<div className="cards_container">
       {props.weatherInfos.map(weatherInfo => <WeatherCard 
 			key = {weatherInfo.name}
-			refresh={props.toRefresh}
+			refresh = {props.toRefresh}
 			{...weatherInfo} />)}
     </div>
 	);
@@ -80,15 +80,13 @@ const WeatherCard = (props) => {
 			console.log(val);
 			localStorage.removeItem(val);
 			props.refresh()
-
-			// console.log(getDataFromLS());
 		}
 
 		return (
 			<div className="card_container">
 				<button
 				className="remove"
-				onClick={() => handleCardRemoval(props.name)}>Remove Card</button>
+				onClick={() => handleCardRemoval(props.name)}>X</button>
 
 				<div>
 					Location = {props.name}
@@ -115,7 +113,6 @@ function App() {
 	return (
 		<div className="container">
 			<LocationInput />
-      
 		</div>
 	);
 }
