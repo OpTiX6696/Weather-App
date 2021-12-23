@@ -4,6 +4,12 @@ import React from "react";
 import credentials from "./Credentials";
 // localStorage.clear()
 
+window.addEventListener('load', (event) => {
+	localStorage.clear()
+  console.log('page is fully loaded');
+});
+
+
 
 // To Get Data From LocalStorage
 let getDataFromLS = () => {
@@ -41,6 +47,7 @@ const LocationInput = () => {
 
 		} catch (error) {
 			console.log("Error in getting location data");
+			alert("Error in getting location data. Try checking your internet connection.")
 
 		}	
 	};
