@@ -24,7 +24,7 @@ $tColor : rgb(73, 14, 212);
 
 
 .container {
-  padding: 20px;
+  // padding: 20px;
   background-color: transparentize($sColor, 0.45);
   min-height: 100vh;
   margin: 0 auto;
@@ -37,11 +37,6 @@ $tColor : rgb(73, 14, 212);
   width: 70%;
   margin: 0 auto;
   text-align: center;
-  // display: flex; 
-  // flex-direction: row;
-  // justify-content: space-between;
-  // align-items: center;
-  // gap: 10px;
   margin-bottom: 20px;
   
 
@@ -56,12 +51,13 @@ $tColor : rgb(73, 14, 212);
     font-size: 1rem;
     width: 70%;
     margin-bottom: 10px;
+    margin: 10px;
   }
 
   button.input_button {
     padding: 10px 10px;
     font-size: 0.85rem;
-    color: white;
+    // color: white;
     letter-spacing: 1px;
     background-color: transparentize($sColor, 0.9) ;
     border-radius: 7px;
@@ -72,13 +68,14 @@ $tColor : rgb(73, 14, 212);
 }
 
 .cards_container {
-  // border: 2px solid red;
-  padding: 0 0;
+  border: 2px solid red;
+  padding: 5px;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
   gap: 2%;
+  margin: auto;
 
   button.remove {
     border: 2px solid rgba(38, 17, 230, 0.281);
@@ -96,9 +93,9 @@ $tColor : rgb(73, 14, 212);
     border: 1px solid rgba(255, 255, 255, 0.582);
     border-radius: 15px;
     width: 25%;
-    min-width: 180px;
+    min-width: 150px;
     max-width: 250px;
-    // height: 400px;
+    height: fit-content;
     margin-bottom: 20px;
     padding: 10px;
     display: flex;
