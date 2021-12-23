@@ -24,16 +24,24 @@ const LocationInput = () => {
 
 	let getWeather = async () => {
 		const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${credentials.api_Key}`;
+
 		
 		try {
 			const res = await fetch(url);
-			const data = await res.json();
-			localStorage.setItem(data.name, JSON.stringify(data));
-			setUpdateWeatherData(getDataFromLS)
+
+			if (res.status == 200) {
+				const data = await res.json();
+				console.log(res.status);
+				localStorage.setItem(data.name, JSON.stringify(data));
+				setUpdateWeatherData(getDataFromLS);
+			} else {
+				alert("City Weather not found")
+			}
 			// console.log('Not LS', updateWeatherData);
 
 		} catch (error) {
 			console.log("Error in getting location data");
+
 		}	
 	};
 
@@ -82,25 +90,43 @@ const WeatherCard = (props) => {
 			props.refresh()
 		}
 
+		const dt = new Date(props.dt * 1000)
+		const date = dt.toString()
+
 		return (
 			<div className="card_container">
 				<button
 				className="remove"
-				onClick={() => handleCardRemoval(props.name)}>X</button>
+				onClick={() => handleCardRemoval(props.name)}>
+				Remove
+				</button>
 
-				<div>
-					Location = {props.name}
-					<br/>
-					Country = {props.sys.country}
-					<br/>
+				<div className="cardInfo">
+					<p className='location'>
+					{props.name}, {props.sys.country}
+					</p>
+
+					{/* <p>
+						Date: {date}
+					</p> */}
 					<img alt="Weather Graphic" src={"https://openweathermap.org/img/wn/"+props.weather[0].icon+"@2x.png"}></img>
-					{/* Icon = {props.weather[0].icon} */}
-					<br/>
-					Condition = {props.weather[0].main}
-					<br/>
-					Description = {props.weather[0].description}
-					<br/>
-					<br/>
+					
+					<p className="description">
+						{props.weather[0].description}
+					</p>
+
+					<p className="temp">
+						{(props.main.temp -273.15).toFixed(2)}°C
+					</p>
+
+					<p className="feels_like">
+						Feels Like {(props.main.feels_like - 273.15).toFixed(2)}°C
+					</p>
+
+					<p className="humidity">
+						{props.main.humidity}% Humidity
+					</p>
+
 				</div>
 
 		</div>
@@ -118,3 +144,5 @@ function App() {
 }
 
 export default App;
+
+
