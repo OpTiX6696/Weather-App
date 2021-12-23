@@ -29,7 +29,7 @@ const LocationInput = () => {
 		try {
 			const res = await fetch(url);
 
-			if (res.status == 200) {
+			if (res.status === 200) {
 				const data = await res.json();
 				console.log(res.status);
 				localStorage.setItem(data.name, JSON.stringify(data));
@@ -90,8 +90,8 @@ const WeatherCard = (props) => {
 			props.refresh()
 		}
 
-		const dt = new Date(props.dt * 1000)
-		const date = dt.toString()
+		// const dt = new Date(props.dt * 1000)
+		// const date = dt.toString()
 
 		return (
 			<div className="card_container">
