@@ -2,6 +2,7 @@
 import "./App.scss";
 import React from "react";
 import credentials from "./Credentials";
+import Header from "./Header";
 // localStorage.clear()
 
 window.addEventListener('load', (event) => {
@@ -144,9 +145,13 @@ const WeatherCard = (props) => {
 function App() {
 
 	return (
+		<>
+			<Header />
 		<div className="container">
 			<LocationInput />
 		</div>
+		</>
+		
 	);
 }
 
