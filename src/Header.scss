@@ -25,6 +25,10 @@ div.header {
   background-color: white;
   margin: 0 auto;
   padding: 10px;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  z-index: 2;
 
   p {
     color: $sColor;
