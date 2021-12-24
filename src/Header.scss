@@ -1,0 +1,44 @@
+$pColor : rgb(10, 134, 236);
+$sColor : rgb(13, 188, 241);
+$tColor : rgb(73, 14, 212);
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Dancing+Script:wght@400;500&family=Imperial+Script&family=Lato:ital,wght@0,100;0,300;0,400;1,100&family=Lora:ital@0;1&family=Mea+Culpa&family=Moon+Dance&family=Oooh+Baby&family=Open+Sans:ital,wght@0,300;0,400;1,300&family=Pushster&family=Roboto:wght@100;300&family=Ubuntu:wght@300&family=Waterfall&display=swap');
+
+
+
+// font-family: 'Abel', sans-serif;
+// font-family: 'Dancing Script', cursive;
+// font-family: 'Imperial Script', cursive;
+// font-family: 'Lato', sans-serif;
+// font-family: 'Lora', serif;
+// font-family: 'Mea Culpa', cursive;
+// font-family: 'Moon Dance', cursive;
+// font-family: 'Oooh Baby', cursive;
+// font-family: 'Open Sans', sans-serif;
+// font-family: 'Pushster', cursive;
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Ubuntu', sans-serif;
+// font-family: 'Waterfall', cursive;
+
+
+div.header {
+  background-color: white;
+  margin: 0 auto;
+  padding: 10px;
+
+  p {
+    color: $sColor;
+    font-family: 'Pushster', cursive;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0 auto;
+
+    span {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: lighter;
+
+    }
+  }
+
+}
